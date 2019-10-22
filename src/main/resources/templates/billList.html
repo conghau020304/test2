@@ -1,0 +1,144 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Bill Management</title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+          integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+    <link rel="stylesheet" type="text/css" th:href="@{../../css/all.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{../../css/style.css}"/>
+
+</head>
+<body>
+
+<div th:replace="header :: header">...</div>
+
+<div class="content container-fluid">
+    <div class="list-product col-lg-12 col-md-12">
+        <div th:switch="${bills}" class="panel panel-default">
+            <div th:case="null" class="panel-heading">
+                <div class="input-group" style="font-size: 30px;">
+                    No Bills yet!
+                </div>
+            </div>
+            <div th:case="*">
+                <div class="panel-heading text-center col-lg-12">
+                    <div class="col-lg-6">
+                        <div class="input-group" style="font-size: 20px;">
+                            Bill Management
+                        </div>
+                    </div>
+                    <form action="/user/bill-list" method="GET">
+                    <div class="col-lg-5">
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Enter customer name or customer phone" id="tk" name="tk">
+                            <div class="input-group-btn">
+                                <button id="btn-search" class="btn btn-default form-control" type="submit"><i class="fas fa-search"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    </form>
+                </div>
+                <div class="panel-body">
+                    <table id="table-products" class="table table-striped">
+                        <thead>
+                        <tr class="text-center">
+                            <th class="text-center">ID</th>
+                            <th class="text-center">Name</th>
+                            <th class="text-center">DateOfBirth</th>
+                            <th class="text-center">Phone</th>
+                            <th class="text-center">Address</th>
+                            <th class="text-center">Note</th>
+                            <th class="text-center">DateOfSell</th>
+                            <th class="text-center">Detail</th>
+                            <th class="text-center">Delete</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                                <div th:each="bill : ${bills}">
+                                        <tr>
+                                            <td th:text="${bill.billId}" class="text-center"></td>
+                                            <td th:text="${bill.customerName}" class="text-center" ></td>
+                                            <td th:text="${bill.customerDateOfBirth}" class="text-center"></td>
+                                            <td th:text="${bill.customerPhone}" class="text-center"></td>
+                                            <td th:text="${bill.customerAddress}" class="text-center"></td>
+                                            <td th:text="${bill.note}" class="text-center"></td>
+                                            <td th:text="${#temporals.format(bill.dateOfSell, 'yyyy-MM-dd HH:mm:ss')}" class="text-center">startTime</td>
+                                            <td class="text-center"><button th:id="${bill.billId}+'detail'" class="btn btn-link" onclick="showTableDetail(this)"><i class="fas fa-info-circle"></i></button></td>
+                                            <td class="text-center"><a th:href="@{/user/delete-bill/{billId}(billId=${bill.billId})}" class="btn btn-link" onclick="return confirmDelete();" ><i class="fas fa-trash-alt"></i></a></td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="1">
+                                            <td colspan="6">
+                                                <table th:id="'tableDetail'+${bill.billId}" class="table table-bordered" hidden>
+                                                    <thead>
+                                                        <tr>
+                                                            <th>ProductID</th>
+                                                            <th>BillID</th>
+                                                            <th>Quantity</th>
+                                                            <th>Price</th>
+                                                            <th>Total</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <div th:each="detail : ${bill.productBillList}">
+                                                            <tr>
+                                                                <td th:text="${detail.productId}"></td>
+                                                                <td th:text="${detail.billId}"></td>
+                                                                <td th:text="${detail.quantity}"></td>
+                                                                <td><span th:text="${#numbers.formatDecimal(detail.price, 0, 'COMMA', 0, 'POINT')}"></span> vnđ</td>
+                                                                <td><span th:text="${#numbers.formatDecimal(detail.price * detail.quantity, 0, 'COMMA', 0, 'POINT')}"></span> vnđ</td>
+                                                            </tr>
+                                                        </div>
+                                                        <tr>
+                                                            <td colspan="3"></td>
+                                                            <td colspan="2">Total: <span th:text="${#numbers.formatDecimal(bill.total(), 0, 'COMMA', 0, 'POINT')}"></span> vnđ</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                                 <td colspan="2">
+                                            </td>
+                                        </tr>
+                                </div>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Import JS-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous">
+</script>
+<script th:src="@{@{../../js/all.js}}"></script>
+<script th:src="@{@{../../js/notify.min.js}}"></script>
+<script th:src="@{@{../../js/notify.js}}"></script>
+<script>
+    function showTableDetail(r){
+        var id = parseInt(r.id);
+        $('#tableDetail'+id).toggle();
+    }
+
+    function confirmDelete(id){
+        var cfm = confirm("Confirm delete Bill!");
+        if(cfm){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+
+</script>
+</body>
+
+</html>

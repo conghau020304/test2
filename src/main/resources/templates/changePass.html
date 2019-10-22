@@ -1,0 +1,72 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Product Management</title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+          integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" th:href="@{../../css/all.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{../../css/style.css}"/>
+</head>
+<body>
+<div th:replace="header :: header">...</div>
+<main class="login-form">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Change Password</div>
+                    <div class="panel-body">
+                            <div class="form-group row">
+                                <label for="passwordOld" class="col-md-4 col-form-label text-md-right">Password Old</label>
+                                <div class="col-md-6">
+                                    <input type="text" id="passwordOld" class="form-control" name="passwordOld" required
+                                           autofocus>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="passwordNew" class="col-md-4 col-form-label text-md-right">Password New</label>
+                                <div class="col-md-6">
+                                    <input type="password" id="passwordNew" class="form-control" name="passwordNew" required>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="rePassword" class="col-md-4 col-form-label text-md-right">Re Password</label>
+                                <div class="col-md-6">
+                                    <input type="password" id="rePassword" class="form-control" name="rePassword" required>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-md-4">
+<!--                                    <p th:if="${param.error}" class="error">Invalid email or password</p>-->
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <button id="change" class="btn btn-primary">
+                                    Change
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous">
+</script>
+<script th:src="@{@{../../js/all.js}}"></script>
+<script th:src="@{@{../../js/changePass.js}}"></script>
+<script th:src="@{@{../../js/notify.min.js}}"></script>
+<script th:src="@{@{../../js/notify.js}}"></script>
+</body>
+</html>

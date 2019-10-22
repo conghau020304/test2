@@ -1,0 +1,38 @@
+.content{
+    border : 1px solid blue;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-bottom: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+.products{
+    border-right: 1px solid blue;
+}
+
+.my-form
+{
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+}
+
+.my-form .row
+{
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.login-form
+{
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+}
+
+.login-form .row
+{
+    margin-left: 0;
+    margin-right: 0;
+}
+.error{
+    color: red;
+}
