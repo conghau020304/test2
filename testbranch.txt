@@ -1,1 +1,2 @@
 thêm mới file tại branch feature/CDHANC-1665-dashboard 
+lai test traning git
